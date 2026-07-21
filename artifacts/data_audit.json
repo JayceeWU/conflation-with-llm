@@ -1,0 +1,27 @@
+{
+  "clean_rows": 2997,
+  "conflicting_pair_rows_removed": 0,
+  "duplicate_pair_rows_removed": 3,
+  "invalid_label_rows": 0,
+  "label_counts": {
+    "0": 1188,
+    "1": 1809
+  },
+  "manifest_path": "/home/shadeform/conflation-with-llm/artifacts/split_manifest.csv",
+  "missing_id_rows": 0,
+  "raw_rows": 3000,
+  "splits": {
+    "test": {
+      "positives": 271,
+      "rows": 450
+    },
+    "train": {
+      "positives": 1267,
+      "rows": 2098
+    },
+    "validation": {
+      "positives": 271,
+      "rows": 449
+    }
+  }
+}

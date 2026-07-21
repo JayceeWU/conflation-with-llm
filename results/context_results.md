@@ -1,4 +1,6 @@
-# 📊 Contextual Model Performance
+# ⚠️ Historical, Unverified Contextual Model Performance
+
+> These tables were produced by the legacy notebooks. The legacy evaluation reversed false-positive and false-negative bookkeeping, and its field-removal code did not reliably remove fields. These values are retained only for provenance and must not be used in the reproducible leaderboard. Run the `benchmark` CLI and regenerate reports from prediction artifacts instead.
 
 ---
 
@@ -247,4 +249,3 @@
 | Precision      | 0.896 |
 | Recall         | 0.870 |
 | F1 Score       | 0.883 |
-

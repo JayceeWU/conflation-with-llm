@@ -1,0 +1,48 @@
+{
+  "best_learning_rate": 5e-05,
+  "cuda_available": true,
+  "git_revision": "dfe27efcbbe61a3ed2b04c530028e29b7b00e250",
+  "gpu": "NVIDIA RTX A6000",
+  "model_id": "microsoft/MiniLM-L12-H384-uncased",
+  "model_revision": "44acabbec0ef496f6dbc93adadea57f376b7c0ec",
+  "packages": {
+    "datasets": "5.0.0",
+    "pandas": "2.3.3",
+    "pyarrow": "25.0.0",
+    "sklearn": "1.7.2",
+    "torch": "2.13.0",
+    "transformers": "5.14.1"
+  },
+  "peak_gpu_memory_mb": 147.63671875,
+  "platform": "Linux-6.8.0-90-generic-x86_64-with-glibc2.35",
+  "python": "3.10.12",
+  "scenario": "full",
+  "seed": 42,
+  "test_metrics": {
+    "accuracy": 0.84,
+    "balanced_accuracy": 0.8273310107402749,
+    "f1": 0.8700361010830325,
+    "fn": 30,
+    "fp": 42,
+    "mcc": 0.6632493832012455,
+    "n": 450,
+    "precision": 0.8515901060070671,
+    "recall": 0.8892988929889298,
+    "tn": 137,
+    "tp": 241
+  },
+  "validation_f1": 0.8632326820603907,
+  "validation_metrics": {
+    "epoch": 4.0,
+    "eval_accuracy": 0.8285077951002228,
+    "eval_balanced_accuracy": 0.8106990339566317,
+    "eval_f1": 0.8632326820603907,
+    "eval_loss": 0.3951619863510132,
+    "eval_mcc": 0.6374164881580257,
+    "eval_precision": 0.8321917808219178,
+    "eval_recall": 0.8966789667896679,
+    "eval_runtime": 0.6547,
+    "eval_samples_per_second": 685.773,
+    "eval_steps_per_second": 22.91
+  }
+}

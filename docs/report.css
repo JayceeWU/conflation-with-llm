@@ -1,0 +1,32 @@
+@page {
+  size: A4;
+  margin: 18mm 16mm 18mm 18mm;
+  @bottom-center { content: "四模型 GPU 实验详细报告 · " counter(page) " / " counter(pages); font-size: 8pt; color: #64748b; }
+}
+@page:first { @bottom-center { content: none; } }
+html { font-family: "Noto Sans CJK SC", "Noto Sans CJK JP", sans-serif; color: #172033; font-size: 9.2pt; line-height: 1.55; }
+body { margin: 0; }
+h1, h2, h3 { color: #173b63; page-break-after: avoid; }
+h1 { font-size: 24pt; border-bottom: 3px solid #2b6cb0; padding-bottom: 8px; }
+h2 { font-size: 16pt; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; margin-top: 20px; }
+h3 { font-size: 12pt; margin-top: 15px; }
+p, li { orphans: 3; widows: 3; }
+a { color: #2563eb; text-decoration: none; }
+table { width: 100%; border-collapse: collapse; margin: 10px 0 14px; font-size: 7.3pt; page-break-inside: avoid; }
+th { background: #173b63; color: white; font-weight: 600; }
+th, td { border: 0.5px solid #a8b4c4; padding: 4px 5px; text-align: right; }
+th:first-child, td:first-child { text-align: left; }
+tbody tr:nth-child(even) { background: #f4f7fb; }
+img { display: block; max-width: 96%; max-height: 182mm; margin: 10px auto 15px; page-break-inside: avoid; }
+blockquote { margin: 10px 0; padding: 8px 12px; background: #eef5fc; border-left: 4px solid #2b6cb0; color: #334155; }
+code { font-family: "DejaVu Sans Mono", monospace; background: #eef2f7; padding: 1px 3px; }
+pre { white-space: pre-wrap; background: #101827; color: #e2e8f0; padding: 10px; border-radius: 4px; font-size: 7.5pt; page-break-inside: avoid; }
+.cover { height: 245mm; display: flex; flex-direction: column; justify-content: center; text-align: center; page-break-after: always; }
+.cover h1 { border: 0; font-size: 30pt; margin-bottom: 16px; }
+.cover .subtitle { font-size: 15pt; color: #475569; }
+.cover .meta { margin-top: 50px; color: #64748b; }
+.toc { page-break-after: always; }
+.toc ul { list-style: none; padding-left: 12px; }
+.toc a::after { content: leader(".") target-counter(attr(href), page); }
+.page-break { page-break-before: always; }
+.caption { text-align: center; color: #64748b; font-size: 8pt; margin-top: -10px; }

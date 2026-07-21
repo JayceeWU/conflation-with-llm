@@ -1,93 +1,106 @@
-# 🌎 Ember Lu - Conflation With LLMs
+# Conflation With Small Language Models
 
-This project is exploring the use of small, scalable LLMs and static embedding models for the purpose of location conflation, or the matching of geographic locations, based on location metadata provided by Overture Maps Foundation.
+This repository benchmarks small language models for deciding whether two Overture-style place records refer to the same real-world place.
 
-## 🗻 Result Highlights
-- **Best Overall Accuracy — Microsoft Phi-3 Mini**
-  - Accuracy: 90.4%
-  - Precision: 0.929
-  - Recall: 0.915
-  - F1 Score: 0.921
-  - Pricing: $0.13 per 1M tokens
-  - Avg. Tokens / Request: 215
-  - Avg. Time / Request: 15.5 ms
+> **Result integrity notice:** The original notebook results used an ineffective `df.drop(...)` call and reversed false-positive/false-negative bookkeeping. Those historical numbers are not part of the reproducible leaderboard and must not be compared with new runs. ELECTRA is rerun by the framework below as the only legacy anchor. Files under `code/`, `results/context_results.md`, and the original presentation are retained as historical artifacts only.
 
-- ⭐ **Best Price-to-Performance — Meta Llama 3.2**
-  - Accuracy: 89%
-  - Precision: 0.901
-  - Recall: 0.922
-  - F1 Score: 0.912
-  - Pricing: $0.06 per 1M tokens
-  - Avg. Tokens / Request: 165
-  - Avg. Time / Request: 6.34 ms
+## Benchmark tracks
 
+Supervised sequence classification:
 
-## 🎯 Objectives ✅
-Models being benchmarked are Meta’s Llama 3.2, Microsoft’s Phi-3 Mini, and Google's Electra.
+- `google/electra-small-discriminator`
+- `microsoft/MiniLM-L12-H384-uncased`
+- `microsoft/deberta-v3-small`
 
-OKRs are 100% met. Target metrics calculated/measured are:
-* ✅ 50%+ ratio of true positive/negative to false positive/negative place matches (matplotlib)
-* ✅ Target > 50% Precision and > 50% Recall accuracy calculations
-* ✅ F1 Score > 80%
-* ✅ Pricing per request (<$1.25/1M tokens)
-* ✅ Time per request (around or <1sec)
+Deterministic prompt inference (zero-shot and fixed three-shot):
 
-For contextual performance, the current target metrics measuring the accuracy across different features include: categories, base_emails, websites, addresses, and no exclusions.
+- `meta-llama/Llama-3.2-1B-Instruct`
+- `Qwen/Qwen2.5-1.5B-Instruct`
+- `google/gemma-2-2b-it`
 
-## 🛠️ Method Overview
-- **Transformers (Hugging Face):** Loaded and configured the models and tokenizer for sequence classification.  
-- **Pandas:** Read the dataset from Parquet format and removed unneeded fields.  
-- **scikit-learn:** Created training and testing splits.
-- **PyTorch:** Converted all inputs into tensors for model training and evaluation. Imported models from Hugging Face, which by default are PyTorch models.
-- **matplotlib:** Visualized all models' accuracy/performance metrics with contextual performance
+The benchmark uses a locked entity-grouped 70/15/15 split. IDs connected through either side of a pair are kept in the same split to prevent entity leakage. Model inputs contain names, categories, websites, social accounts, emails, phones, brands, and addresses; source IDs and confidence fields are excluded.
 
-## 🏢 Repo Organization
-> ```
-> CONFLATION-WITH-LLM/
-> ├── code/
-> │   ├── MetricVisualization.ipynb        # Metric Graph Generation
-> │   └── Models.ipynb                     # Model Training & Evaluation
-> │
-> ├── data/
-> │   └── samples_3k_project_c_updated.parquet   # Dataset (3,000 samples)
-> │
-> └── results/
->     ├── metric_graphs/                   # Metric Visualizations over Contextual Performance 
->     │   ├── accuracy.png
->     │   ├── f1.png
->     │   ├── precision.png
->     │   ├── recall.png
->     │   ├── tn_to_fn_ratio.png
->     │   └── tp_to_fp_ratio.png
->     │
->     └── context_results.md               # Metric Summary and Context Analysis
-> ```
+## Latest GPU main run
 
-# Running the Models Notebook (Models.ipynb)
-1. Run: Cell 1 uses pip to install all necessary libraries: transformers, accelerate, torch, hugging_face
-2. Run: Cell 2 imports the necessary methods from Hugging Face for the models selected
-3. Choose a model to use, and scroll to the cell underneath the model's name labeled. Run the cell.
-* NOTE: For the Llama 3.2, login into HuggingFace is required first, with permissions needed for access to the model by the HF Llama moderators.
-4. Scroll down to Training Models, and run the cell directly underneath its label. This trains
-the model with our training data, part of the 3K data points in the parquet.
-* NOTE: For the Llama 3.2, the first two lines of code in the Training Models cell need to be uncommented (sets a necessary parameter for the tokenizer). For other models, comment out those lines.
-5. Scroll down to Evaluation Data, and run the three cells directly underneath its label. This lists
-accuracy metrics, tokens, precision, recall, F1 score, etc. 
+The current reproducible report contains exactly four full-field, seed-42 runs: the three supervised encoders above and zero-shot `Qwen/Qwen2.5-1.5B-Instruct`. Llama 3.2 and Gemma 2 were intentionally skipped because they require gated Hugging Face access; this run does not include three-shot prompting, extra seeds, or ablations.
 
+See [`artifacts/reports/benchmark.md`](artifacts/reports/benchmark.md) for the generated leaderboard and confidence intervals. Its values are generated from `run_metrics.csv` and the four per-example prediction files, rather than maintained manually in this README.
 
-## 📊 Status  (Updated: 11/28/2025)
-OKRs are 100% met! ✅ Phi-3 Mini has the best performance, but Llama 3.2 has nearly identical performance with 2x faster speed and half the price as the Phi-3 Mini. Current recommendation is the Llama 3.2.
+## Installation
 
-Phi-3 Mini as an LLM-> Sequence Classifier is producing a overall accuracy of **90.4%**. 
-Llama 3.2 as an LLM -> Sequence Classifier is producing an overall accuracy of **89%**. 
-Google's Electra as a static embedding model is producing an overall acuracy of **85.7%**. 
-See more metrics below and in results/context_results.md
+Python 3.10+ and a CUDA GPU are recommended. Full runs target a single GPU with at least 24 GB memory.
 
-## 📈 Metrics
-| Model                  | Accuracy | Precision | Recall | F1 Score | Pricing (USD)     | Avg. Tokens / Request | Avg. Time / Request |
-|------------------------|:--------:|:---------:|:------:|:--------:|--------------------|------------------------|----------------------|
-| **Microsoft Phi-3 Mini** | 90.4% | 0.929 | 0.915 | 0.921 | $0.13 / 1M tokens   | 215 tokens             | 15.5 ms           |
-| **Meta Llama 3.2**       | 89%   | 0.901 | 0.922 | 0.912 | $0.06 / 1M tokens   | 165 tokens             | 6.34 ms           |
-| **Google Electra**       | 85.7% | 0.896 | 0.870 | 0.883 | Free (Open Source)  | 233 tokens             | 4.57 ms           |
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e '.[dev]'
+```
 
+Llama and Gemma are gated. Accept their licenses on Hugging Face and authenticate before running them:
 
+```bash
+hf auth login
+```
+
+## Usage
+
+Audit the source data and create the locked split first:
+
+```bash
+benchmark validate-data
+```
+
+Train an encoder. Full-field headline runs use seeds 42, 43, and 44:
+
+```bash
+benchmark train-encoder --model google/electra-small-discriminator --scenario full --seed 42
+```
+
+Run deterministic prompt evaluation:
+
+```bash
+benchmark run-prompt --model Qwen/Qwen2.5-1.5B-Instruct --regime zero --scenario full
+benchmark run-prompt --model Qwen/Qwen2.5-1.5B-Instruct --regime three-shot --scenario full
+```
+
+Available scenarios are `full`, `no_email`, `no_category`, `no_website`, `no_address`, and `no_brand`. For encoder ablations use seed 42; run all scenarios independently because the encoder must be retrained when its input schema changes.
+
+Evaluate one prediction artifact or regenerate every report:
+
+```bash
+benchmark evaluate --predictions artifacts/encoder/google__electra-small-discriminator/full/seed-42/predictions.csv
+benchmark report
+```
+
+The report is generated exclusively from prediction artifacts. Outputs include run metadata, raw per-example predictions, aggregate CSV files, Markdown tables, and plots. No API-price estimate is produced because these runs measure local inference.
+
+## Metrics and timing
+
+The primary metric is F1. Accuracy, precision, recall, balanced accuracy, MCC, TP/TN/FP/FN, invalid prompt-output rate, and 1,000-sample bootstrap confidence intervals are also reported. Latency uses batch size 1, 20 warm-up requests, CUDA synchronization, and p50/p95 summaries.
+
+Every prediction row includes:
+
+```text
+example_id, split, model_id, track, regime, scenario, seed,
+label, prediction, valid_output, score_or_raw_output,
+input_tokens, output_tokens, latency_ms
+```
+
+## Tests
+
+```bash
+pytest
+```
+
+Tests cover stable serialization, paired-field ablation, entity leakage, deterministic split generation, metric orientation, bootstrap reproducibility, and strict prompt-output parsing.
+
+## Repository layout
+
+```text
+configs/                 Benchmark model and path configuration
+src/conflation_benchmark Reproducible CLI implementation
+tests/                   Unit tests
+data/                    Original read-only parquet dataset
+artifacts/               Generated manifests, predictions, metadata, and reports
+code/ and results/       Historical notebook artifacts; not leaderboard sources
+```

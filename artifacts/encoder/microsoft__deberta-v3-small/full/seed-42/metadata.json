@@ -1,0 +1,49 @@
+{
+  "best_learning_rate": 2e-05,
+  "cuda_available": true,
+  "git_revision": "dfe27efcbbe61a3ed2b04c530028e29b7b00e250",
+  "gpu": "NVIDIA RTX A6000",
+  "model_id": "microsoft/deberta-v3-small",
+  "model_revision": "a36c739020e01763fe789b4b85e2df55d6180012",
+  "packages": {
+    "datasets": "5.0.0",
+    "pandas": "2.3.3",
+    "pyarrow": "25.0.0",
+    "sklearn": "1.7.2",
+    "torch": "2.13.0",
+    "transformers": "5.14.1"
+  },
+  "peak_gpu_memory_mb": 591.64013671875,
+  "platform": "Linux-6.8.0-90-generic-x86_64-with-glibc2.35",
+  "python": "3.10.12",
+  "scenario": "full",
+  "seed": 42,
+  "test_metrics": {
+    "accuracy": 0.8088888888888889,
+    "balanced_accuracy": 0.8071904182728977,
+    "f1": 0.8371212121212122,
+    "fn": 50,
+    "fp": 36,
+    "mcc": 0.6075801904774503,
+    "n": 450,
+    "precision": 0.8599221789883269,
+    "recall": 0.8154981549815498,
+    "tn": 143,
+    "tp": 221
+  },
+  "training_precision": "fp32",
+  "validation_f1": 0.7976424361493124,
+  "validation_metrics": {
+    "epoch": 8.0,
+    "eval_accuracy": 0.7706013363028953,
+    "eval_balanced_accuracy": 0.7762241386458808,
+    "eval_f1": 0.7976424361493124,
+    "eval_loss": 0.5650871396064758,
+    "eval_mcc": 0.5414477633753227,
+    "eval_precision": 0.8529411764705882,
+    "eval_recall": 0.7490774907749077,
+    "eval_runtime": 1.3741,
+    "eval_samples_per_second": 326.77,
+    "eval_steps_per_second": 10.917
+  }
+}

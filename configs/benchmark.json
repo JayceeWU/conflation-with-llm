@@ -1,0 +1,19 @@
+{
+  "data_path": "data/samples_3k_project_c_updated.parquet",
+  "manifest_path": "artifacts/split_manifest.csv",
+  "output_dir": "artifacts",
+  "seed": 42,
+  "split_ratios": {"train": 0.70, "validation": 0.15, "test": 0.15},
+  "max_length": 256,
+  "encoder_models": [
+    "google/electra-small-discriminator",
+    "microsoft/MiniLM-L12-H384-uncased",
+    "microsoft/deberta-v3-small"
+  ],
+  "prompt_models": [
+    "meta-llama/Llama-3.2-1B-Instruct",
+    "Qwen/Qwen2.5-1.5B-Instruct",
+    "google/gemma-2-2b-it"
+  ],
+  "scenarios": ["full", "no_email", "no_category", "no_website", "no_address", "no_brand"]
+}

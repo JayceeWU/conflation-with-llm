@@ -23,6 +23,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.12"]
+report = ["markdown>=3.8", "weasyprint>=66", "pypdf>=5"]
 
 [project.scripts]
 benchmark = "conflation_benchmark.cli:main"

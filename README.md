@@ -26,6 +26,9 @@ The current reproducible report contains exactly four full-field, seed-42 runs: 
 
 See [`artifacts/reports/benchmark.md`](artifacts/reports/benchmark.md) for the generated leaderboard and confidence intervals. Its values are generated from `run_metrics.csv` and the four per-example prediction files, rather than maintained manually in this README.
 
+For methodology, credibility fixes, resource measurements, confusion matrices, and illustrated analysis, see the [detailed Chinese Markdown report](docs/four-model-gpu-experiment-report.md) or [PDF edition](docs/four-model-gpu-experiment-report.pdf).
+An [English Markdown report](docs/four-model-gpu-experiment-report-en.md) and [English PDF edition](docs/four-model-gpu-experiment-report-en.pdf) are also available.
+
 ## Installation
 
 Python 3.10+ and a CUDA GPU are recommended. Full runs target a single GPU with at least 24 GB memory.
